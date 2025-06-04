@@ -1,0 +1,12 @@
+services:
+  postgres:
+    image: postgres
+    container_name: sistemafx
+    restart: always
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: sistemafx
+    ports:
+      - "5432:5432"
+
