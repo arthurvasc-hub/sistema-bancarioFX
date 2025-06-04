@@ -11,16 +11,13 @@ public class Gateway {
     private static final String PASSWORD = "postgres";
 
     public static Connection getConnection() throws SQLException {
-
         try {
             Class.forName("org.postgresql.Driver");
-
             return DriverManager.getConnection(URL, USER, PASSWORD);
-        } catch (SQLException | ClassNotFoundException e) {
 
+        } catch (SQLException | ClassNotFoundException e) {
             throw new SQLException("Erro ao obter conexão: " + e.getMessage());
         }
-
     }
 
 
