@@ -17,7 +17,31 @@ public class ClientService implements ClientRepository {
 
     @Override
     public Client findById(Long id) {
-        return null;
+        Client client = null;
+
+        try {
+            ResultSet rs = null;
+            String sql = "SELECT * FROM clientes WHERE id =?";
+            PreparedStatement ps = Gateway.getConnection().prepareStatement(sql);
+            ps.setLong(1, id);
+            rs = ps.executeQuery();
+
+            if (rs.next()) {
+                client = new Client();
+                client.setId(rs.getLong("id"));
+                client.setName(rs.getString("name"));
+                client.setAccount(Account.valueOf(rs.getString("account")));
+                client.setGender(Gender.valueOf(rs.getString("gender")));
+
+                System.out.println("Id: " + client.getId() + " - Nome: " + client.getName() + " - Conta: " + client.getAccount());
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            System.out.println("Error: " + e.getMessage());
+        }
+
+        return client;
     }
 
     @Override

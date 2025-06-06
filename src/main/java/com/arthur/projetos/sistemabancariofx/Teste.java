@@ -20,7 +20,7 @@ public class Teste {
         client.setGender(Gender.MASCULINO);
 
 
-        clientService.update(client, 1L);
+        clientService.findById(1L);
 
 
 
