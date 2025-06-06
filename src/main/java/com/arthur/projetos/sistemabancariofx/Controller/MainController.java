@@ -76,7 +76,7 @@ public class MainController implements Initializable {
     void save(ActionEvent event) {
         String name = tf_nome.getText().toString();
         String cpf = tf_cpf.getText().toString();
-        String idade= tf_idade.getText().toString();
+        String idade = tf_idade.getText().toString();
 
         Object client = "Nome: " + name + " - CPF: " + cpf + " - Idade: " + idade + " anos";
 

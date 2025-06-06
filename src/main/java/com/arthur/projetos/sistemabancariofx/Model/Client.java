@@ -6,7 +6,6 @@ import com.arthur.projetos.sistemabancariofx.Enums.Gender;
 public class Client {
 
 
-
     private Long id;
 
     private String name;
@@ -19,7 +18,7 @@ public class Client {
 
     private Gender gender;
 
-    public Client( String name, String cpf, String password, Account account, Gender gender) {
+    public Client(String name, String cpf, String password, Account account, Gender gender) {
         this.name = name;
         this.cpf = cpf;
         this.password = password;

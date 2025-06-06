@@ -22,7 +22,7 @@ public class Gateway {
 
 
     public static void closeConnection(Connection connection) throws SQLException {
-        if(connection != null && !connection.isClosed()) {
+        if (connection != null && !connection.isClosed()) {
             connection.close();
         }
     }

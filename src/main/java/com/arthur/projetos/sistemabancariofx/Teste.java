@@ -9,16 +9,15 @@ import java.sql.SQLException;
 
 public class Teste {
     public static void main(String[] args) throws SQLException {
-        Client client = new Client();
 
-        client.setName("Mamofi Vasconcelos");
-        client.setCpf("8888888888");
-        client.setPassword("mamofi123");
-        client.setAccount(Account.POUPANÇA);
-        client.setGender(Gender.MASCULINO);
+        ClientService clientService = new ClientService();
 
-         ClientService clientService = new ClientService();
 
-        clientService.createClient(client);
+
+        clientService.deleteClientById(3L);
+
+
+
     }
+
 }
