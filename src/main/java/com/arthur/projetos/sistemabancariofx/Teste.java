@@ -12,15 +12,17 @@ public class Teste {
 
         ClientService clientService = new ClientService();
 
+
         Client client = new Client();
-        client.setName("Tutu");
-        client.setCpf("99999999999");
+
+        client.setName("Arthur Vasconcelos");
+        client.setAge(26);
         client.setPassword("Arthur008");
-        client.setAccount(Account.POUPANCA);
+        client.setCpf("99999999333");
         client.setGender(Gender.MASCULINO);
+        client.setAccount(Account.POUPANCA);
 
-
-        clientService.findById(1L);
+        clientService.createClient(client);
 
 
 

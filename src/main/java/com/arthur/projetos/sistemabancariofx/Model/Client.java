@@ -10,6 +10,8 @@ public class Client {
 
     private String name;
 
+    private Integer age;
+
     private String cpf;
 
     private String password;
@@ -18,8 +20,11 @@ public class Client {
 
     private Gender gender;
 
-    public Client(String name, String cpf, String password, Account account, Gender gender) {
+
+    public Client(Long id, String name, Integer age, String cpf, String password, Account account, Gender gender) {
+        this.id = id;
         this.name = name;
+        this.age = age;
         this.cpf = cpf;
         this.password = password;
         this.account = account;
@@ -75,5 +80,13 @@ public class Client {
 
     public void setGender(Gender gender) {
         this.gender = gender;
+    }
+
+    public Integer getAge() {
+        return age;
+    }
+
+    public void setAge(Integer age) {
+        this.age = age;
     }
 }

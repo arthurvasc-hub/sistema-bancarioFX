@@ -1,11 +1,17 @@
+
 package com.arthur.projetos.sistemabancariofx.Controller;
 
+import com.arthur.projetos.sistemabancariofx.Enums.Account;
+import com.arthur.projetos.sistemabancariofx.Enums.Gender;
+import com.arthur.projetos.sistemabancariofx.Model.Client;
+import com.arthur.projetos.sistemabancariofx.Service.ClientService;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 
 import java.net.URL;
+import java.sql.SQLException;
 import java.util.ResourceBundle;
 
 public class MainController implements Initializable {
@@ -72,19 +78,34 @@ public class MainController implements Initializable {
 
     }
 
+    Client client = new Client();
+    ClientService clientService = new ClientService();
+
     @FXML
-    void save(ActionEvent event) {
-        String name = tf_nome.getText().toString();
-        String cpf = tf_cpf.getText().toString();
-        String idade = tf_idade.getText().toString();
+    public void save(ActionEvent event) throws SQLException {
 
-        Object client = "Nome: " + name + " - CPF: " + cpf + " - Idade: " + idade + " anos";
+        client.setName(tf_nome.getText().toString());
+        client.setCpf(tf_cpf.getText().toString());
+        client.setPassword(pf_senha.getText().toString());
+        client.setAge(Integer.valueOf(tf_idade.getText().toString()));
 
-        Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setHeaderText("Alerta!");
-        alert.setContentText("Parabéns, bem vindo ao nosso banco." + client);
 
-        alert.show();
+        if (rb_masculino.isSelected()) {
+            client.setGender(Gender.MASCULINO);
+        }
 
+        if(rb_femenino.isSelected()){
+            client.setGender(Gender.FEMENINO);
+        }
+
+        if(rb_corrente.isSelected()) {
+            client.setAccount(Account.CORRENTE);
+        }
+
+        if (rb_poupanca.isSelected()) {
+            client.setAccount(Account.POUPANCA);
+        }
+
+        clientService.createClient(client);
     }
 }

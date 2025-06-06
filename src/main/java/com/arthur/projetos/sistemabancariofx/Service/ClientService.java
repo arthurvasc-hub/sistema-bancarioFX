@@ -30,6 +30,7 @@ public class ClientService implements ClientRepository {
                 client = new Client();
                 client.setId(rs.getLong("id"));
                 client.setName(rs.getString("name"));
+                client.setAge(rs.getInt("age"));
                 client.setAccount(Account.valueOf(rs.getString("account")));
                 client.setGender(Gender.valueOf(rs.getString("gender")));
 
@@ -58,6 +59,7 @@ public class ClientService implements ClientRepository {
                 Client client = new Client();
                 client.setId(rs.getLong("id"));
                 client.setName(rs.getString("name"));
+                client.setAge(rs.getInt("age"));
                 client.setAccount(Account.valueOf(rs.getString("account")));
                 client.setGender(Gender.valueOf(rs.getString("gender")));
 
@@ -79,13 +81,14 @@ public class ClientService implements ClientRepository {
     public void createClient(Client client) throws SQLException {
 
         try {
-            String sql = "INSERT INTO clientes(name, cpf, password, account, gender) VALUES (?, ?, ?, ?::account, ?::gender)";
+            String sql = "INSERT INTO clientes(name, cpf, password, account, gender, age) VALUES (?, ?, ?, ?::account_new, ?::gender, ?)";
             PreparedStatement ps = Gateway.getConnection().prepareStatement(sql);
             ps.setString(1, client.getName());
             ps.setString(2, client.getCpf());
             ps.setString(3, SenhaUtils.hashSenha(client.getPassword()));
             ps.setString(4, client.getAccount().name());
             ps.setString(5, client.getGender().name());
+            ps.setInt(6, client.getAge());
             ps.executeUpdate();
 
         } catch (SQLException e) {
@@ -120,14 +123,15 @@ public class ClientService implements ClientRepository {
     @Override
     public void update(Client client, Long id) {
         try {
-            String sql = "UPDATE clientes SET name=?, cpf=?, password=?, account=?::account_new, gender=?::gender WHERE id =?";
+            String sql = "UPDATE clientes SET name=?, cpf=?, password=?, account=?::account_new, gender=?::gender, age WHERE id =?";
             PreparedStatement ps = Gateway.getConnection().prepareStatement(sql);
             ps.setString(1, client.getName());
             ps.setString(2, client.getCpf());
             ps.setString(3, SenhaUtils.hashSenha(client.getPassword()));
             ps.setString(4, client.getAccount().name());
             ps.setString(5, client.getGender().name());
-            ps.setLong(6, id);
+            ps.setInt(6, client.getAge());
+            ps.setLong(7, id);
 
             ps.executeUpdate();
 
