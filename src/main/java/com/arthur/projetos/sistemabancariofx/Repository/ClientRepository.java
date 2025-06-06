@@ -14,4 +14,6 @@ public interface ClientRepository {
    public void createClient(Client client) throws SQLException;
 
    public void deleteClientById(Long id);
+
+   public void update(Client client, Long id);
 }

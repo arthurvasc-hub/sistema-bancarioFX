@@ -92,4 +92,25 @@ public class ClientService implements ClientRepository {
         }
 
     }
+
+    @Override
+    public void update(Client client, Long id) {
+        try {
+            String sql = "UPDATE clientes SET name=?, cpf=?, password=?, account=?::account_new, gender=?::gender WHERE id =?";
+            PreparedStatement ps = Gateway.getConnection().prepareStatement(sql);
+            ps.setString(1, client.getName());
+            ps.setString(2, client.getCpf());
+            ps.setString(3, SenhaUtils.hashSenha(client.getPassword()));
+            ps.setString(4, client.getAccount().name());
+            ps.setString(5, client.getGender().name());
+            ps.setLong(6, id);
+
+            ps.executeUpdate();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            System.out.println("Error: " + e.getMessage());
+
+        }
+    }
 }
