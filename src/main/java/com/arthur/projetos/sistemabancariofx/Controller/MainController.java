@@ -84,28 +84,64 @@ public class MainController implements Initializable {
     @FXML
     public void save(ActionEvent event) throws SQLException {
 
-        client.setName(tf_nome.getText().toString());
-        client.setCpf(tf_cpf.getText().toString());
-        client.setPassword(pf_senha.getText().toString());
-        client.setAge(Integer.valueOf(tf_idade.getText().toString()));
+        if(validator()) {
+            client.setName(tf_nome.getText().toString());
+            client.setCpf(tf_cpf.getText().toString());
+            client.setPassword(pf_senha.getText().toString());
+            client.setAge(Integer.valueOf(tf_idade.getText().toString()));
 
 
-        if (rb_masculino.isSelected()) {
-            client.setGender(Gender.MASCULINO);
-        }
+            if (rb_masculino.isSelected()) {
+                client.setGender(Gender.MASCULINO);
+            }
 
-        if(rb_femenino.isSelected()){
-            client.setGender(Gender.FEMENINO);
-        }
+            if (rb_femenino.isSelected()) {
+                client.setGender(Gender.FEMENINO);
+            }
 
-        if(rb_corrente.isSelected()) {
-            client.setAccount(Account.CORRENTE);
-        }
+            if (rb_corrente.isSelected()) {
+                client.setAccount(Account.CORRENTE);
+            }
 
-        if (rb_poupanca.isSelected()) {
-            client.setAccount(Account.POUPANCA);
+            if (rb_poupanca.isSelected()) {
+                client.setAccount(Account.POUPANCA);
+            }
         }
 
         clientService.createClient(client);
+    }
+
+
+    public boolean validator(){
+        StringBuffer message = new StringBuffer();
+
+        if(tf_nome.getText().equals("")){
+            message.append("O campo nome é obrigatório. \n");
+        }
+        if(tf_cpf.getText().equals("")){
+            message.append("O campo CPF é obrigatório. \n");
+        }
+
+        if(tf_idade.getText().equals("")) {
+            message.append("O campo idade é obrigatório \n");
+        }
+
+        if(pf_senha.getText().equals("")) {
+            message.append("O campo senha é obrigatório \n");
+        }
+
+
+        if(!message.isEmpty()) {
+
+        Alert alert = new Alert(Alert.AlertType.WARNING);
+        alert.setHeaderText("ERROR");
+        alert.setContentText(message.toString());
+        alert.show();
+
+            return false;
+        }
+        else
+            return true;
+
     }
 }
