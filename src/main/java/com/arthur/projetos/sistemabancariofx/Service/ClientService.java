@@ -81,7 +81,7 @@ public class ClientService implements ClientRepository {
     public void createClient(Client client) throws SQLException {
 
         try {
-            String sql = "INSERT INTO clientes(name, cpf, password, account, gender, age) VALUES (?, ?, ?, ?::account_new, ?::gender, ?)";
+            String sql = "INSERT INTO clientes(name, cpf, password, account, gender, age) VALUES (?, ?, ?, ?::account_new, ?::gender_new, ?)";
             PreparedStatement ps = Gateway.getConnection().prepareStatement(sql);
             ps.setString(1, client.getName());
             ps.setString(2, client.getCpf());
@@ -141,4 +141,7 @@ public class ClientService implements ClientRepository {
 
         }
     }
+
+
+
 }

@@ -17,6 +17,7 @@ import javafx.scene.input.MouseEvent;
 import java.net.URL;
 import java.sql.SQLException;
 import java.util.List;
+import java.util.Optional;
 import java.util.ResourceBundle;
 
 public class MainController implements Initializable {
@@ -245,6 +246,22 @@ public class MainController implements Initializable {
         if (rb_poupanca.isSelected()) {
             client.setAccount(Account.POUPANCA);
         }
+    }
+
+    public void delete(ActionEvent event){
+
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle("Confirmação deletar");
+        alert.setHeaderText("Tem certeza que deseja eliminar?");
+
+        Optional<ButtonType> result = alert.showAndWait();
+
+        if(result.get() == ButtonType.OK) {
+            clientService.deleteClientById(client.getId());
+            showInfoTable();
+            clearText();
+        }
+
     }
 
 

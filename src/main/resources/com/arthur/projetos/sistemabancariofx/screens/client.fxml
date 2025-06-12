@@ -90,7 +90,7 @@
             <Font size="14.0" />
          </font>
       </Button>
-      <Button fx:id="bt_deletar" layoutX="856.0" layoutY="195.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="78.0" text="Deletar">
+      <Button fx:id="bt_deletar" layoutX="856.0" layoutY="195.0" mnemonicParsing="false" onAction="#delete" prefHeight="25.0" prefWidth="78.0" text="Deletar">
          <font>
             <Font size="14.0" />
          </font>
