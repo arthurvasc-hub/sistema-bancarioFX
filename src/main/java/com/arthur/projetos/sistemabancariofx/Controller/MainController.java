@@ -5,13 +5,17 @@ import com.arthur.projetos.sistemabancariofx.Enums.Account;
 import com.arthur.projetos.sistemabancariofx.Enums.Gender;
 import com.arthur.projetos.sistemabancariofx.Model.Client;
 import com.arthur.projetos.sistemabancariofx.Service.ClientService;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
+import javafx.scene.control.cell.PropertyValueFactory;
 
 import java.net.URL;
 import java.sql.SQLException;
+import java.util.List;
 import java.util.ResourceBundle;
 
 public class MainController implements Initializable {
@@ -35,7 +39,7 @@ public class MainController implements Initializable {
     private RadioButton rb_corrente;
 
     @FXML
-    private RadioButton rb_femenino;
+    private RadioButton rb_feminino;
 
     @FXML
     private RadioButton rb_masculino;
@@ -71,15 +75,26 @@ public class MainController implements Initializable {
     private TextField tf_nome;
 
     @FXML
-    private TableView<?> tv_clientes;
+    private TableView<Client> tv_clientes;
+
+    private ObservableList<Client> clientObservableList;
+
+    private ClientService clientService;
+
+    private Client client;
+
+
+
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-
+        this.clientService = new ClientService();
+        this.client = new Client();
+        showInfoTable();
     }
 
-    Client client = new Client();
-    ClientService clientService = new ClientService();
+
+
 
     @FXML
     public void save(ActionEvent event) throws SQLException {
@@ -95,8 +110,8 @@ public class MainController implements Initializable {
                 client.setGender(Gender.MASCULINO);
             }
 
-            if (rb_femenino.isSelected()) {
-                client.setGender(Gender.FEMENINO);
+            if (rb_feminino.isSelected()) {
+                client.setGender(Gender.FEMININO);
             }
 
             if (rb_corrente.isSelected()) {
@@ -107,8 +122,9 @@ public class MainController implements Initializable {
                 client.setAccount(Account.POUPANCA);
             }
         }
-
         clientService.createClient(client);
+        showInfoTable();
+        clearText();
     }
 
 
@@ -144,4 +160,31 @@ public class MainController implements Initializable {
             return true;
 
     }
+
+    public void showInfoTable(){
+
+        tc_id.setCellValueFactory(new PropertyValueFactory<>("id"));
+        tc_nome.setCellValueFactory(new PropertyValueFactory<>("name"));
+        tc_sexo.setCellValueFactory(new PropertyValueFactory<>("gender"));
+        tc_idade.setCellValueFactory(new PropertyValueFactory<>("age"));
+        tc_cpf.setCellValueFactory(new PropertyValueFactory<>("cpf"));
+
+        List<Client> allClients = clientService.findAll();
+
+        clientObservableList = FXCollections.observableList(allClients);
+
+        tv_clientes.setItems(clientObservableList);
+
+
+    }
+
+    public void clearText(){
+        tf_nome.setText("");
+        tf_idade.setText("");
+        tf_cpf.setText("");
+        tf_cpf.setText("");
+        pf_senha.setText("");
+    }
+
+
 }

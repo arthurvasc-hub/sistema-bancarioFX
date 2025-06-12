@@ -9,4 +9,7 @@ module com.arthur.projetos.sistemabancariofx {
     exports com.arthur.projetos.sistemabancariofx;
     exports com.arthur.projetos.sistemabancariofx.Controller;
     opens com.arthur.projetos.sistemabancariofx.Controller to javafx.fxml;
+    opens com.arthur.projetos.sistemabancariofx.Model to javafx.base;
+
+
 }

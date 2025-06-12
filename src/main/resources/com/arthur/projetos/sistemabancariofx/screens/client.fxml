@@ -135,7 +135,7 @@
                   <ToggleGroup fx:id="sexo" />
                </toggleGroup>
             </RadioButton>
-            <RadioButton fx:id="rb_femenino" mnemonicParsing="false" text="Femenino" toggleGroup="$sexo" GridPane.columnIndex="1" GridPane.rowIndex="1">
+            <RadioButton fx:id="rb_feminino" mnemonicParsing="false" text="Feminino" toggleGroup="$sexo" GridPane.columnIndex="1" GridPane.rowIndex="1">
                <font>
                   <Font size="16.0" />
                </font>
