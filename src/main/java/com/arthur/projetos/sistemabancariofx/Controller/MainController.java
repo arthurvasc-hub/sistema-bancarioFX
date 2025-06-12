@@ -12,6 +12,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.MouseEvent;
 
 import java.net.URL;
 import java.sql.SQLException;
@@ -91,6 +92,13 @@ public class MainController implements Initializable {
         this.clientService = new ClientService();
         this.client = new Client();
         showInfoTable();
+        hideButtons();
+    }
+
+    void hideButtons(){
+        this.bt_editar.setVisible(false);
+        this.bt_deletar.setVisible(false);
+
     }
 
 
@@ -100,28 +108,13 @@ public class MainController implements Initializable {
     public void save(ActionEvent event) throws SQLException {
 
         if(validator()) {
-            client.setName(tf_nome.getText().toString());
-            client.setCpf(tf_cpf.getText().toString());
-            client.setPassword(pf_senha.getText().toString());
-            client.setAge(Integer.valueOf(tf_idade.getText().toString()));
-
-
-            if (rb_masculino.isSelected()) {
-                client.setGender(Gender.MASCULINO);
-            }
-
-            if (rb_feminino.isSelected()) {
-                client.setGender(Gender.FEMININO);
-            }
-
-            if (rb_corrente.isSelected()) {
-                client.setAccount(Account.CORRENTE);
-            }
-
-            if (rb_poupanca.isSelected()) {
-                client.setAccount(Account.POUPANCA);
-            }
+            client.setName(tf_nome.getText());
+            client.setCpf(tf_cpf.getText());
+            client.setPassword(pf_senha.getText());
+            client.setAge(Integer.valueOf(tf_idade.getText()));
+            rbSelected();
         }
+
         clientService.createClient(client);
         showInfoTable();
         clearText();
@@ -167,7 +160,7 @@ public class MainController implements Initializable {
         tc_nome.setCellValueFactory(new PropertyValueFactory<>("name"));
         tc_sexo.setCellValueFactory(new PropertyValueFactory<>("gender"));
         tc_idade.setCellValueFactory(new PropertyValueFactory<>("age"));
-        tc_cpf.setCellValueFactory(new PropertyValueFactory<>("cpf"));
+
 
         List<Client> allClients = clientService.findAll();
 
@@ -182,8 +175,76 @@ public class MainController implements Initializable {
         tf_nome.setText("");
         tf_idade.setText("");
         tf_cpf.setText("");
-        tf_cpf.setText("");
         pf_senha.setText("");
+    }
+
+    @FXML
+    void fillFields(MouseEvent event) {
+
+        client = (Client) tv_clientes.getSelectionModel().getSelectedItem();
+
+        if(client != null){
+
+            bt_salvar.setVisible(false);
+            bt_editar.setVisible(true);
+            bt_deletar.setVisible(true);
+
+            tf_nome.setText(client.getName());
+            tf_idade.setText(String.valueOf(client.getAge()));
+
+            if(client.getGender().equals(Gender.MASCULINO)){
+                rb_masculino.setSelected(true);
+            }
+
+            else if(client.getGender().equals(Gender.FEMININO)){
+                rb_feminino.setSelected(true);
+            }
+
+            if(client.getAccount().equals(Account.CORRENTE)){
+                rb_corrente.setSelected(true);
+            }
+
+            else if(client.getAccount().equals(Account.POUPANCA)){
+                rb_poupanca.setSelected(true);
+            }
+
+        }
+
+    }
+
+    @FXML
+    void edit(ActionEvent event) {
+
+        if(validator()){
+        client.setName(tf_nome.getText());
+        client.setCpf(tf_cpf.getText());
+        client.setPassword(pf_senha.getText());
+        client.setAge(Integer.valueOf(tf_idade.getText()));
+        rbSelected();
+        }
+
+        clientService.update(client, client.getId());
+        showInfoTable();
+        clearText();
+
+    }
+
+    private void rbSelected() {
+        if (rb_masculino.isSelected()) {
+            client.setGender(Gender.MASCULINO);
+        }
+
+        if (rb_feminino.isSelected()) {
+            client.setGender(Gender.FEMININO);
+        }
+
+        if (rb_corrente.isSelected()) {
+            client.setAccount(Account.CORRENTE);
+        }
+
+        if (rb_poupanca.isSelected()) {
+            client.setAccount(Account.POUPANCA);
+        }
     }
 
 

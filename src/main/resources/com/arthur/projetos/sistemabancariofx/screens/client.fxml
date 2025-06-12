@@ -85,7 +85,7 @@
             <Font size="14.0" />
          </font>
       </Button>
-      <Button fx:id="bt_editar" layoutX="752.0" layoutY="195.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="78.0" text="Editar">
+      <Button fx:id="bt_editar" layoutX="752.0" layoutY="195.0" mnemonicParsing="false" onAction="#edit" prefHeight="30.0" prefWidth="78.0" text="Editar">
          <font>
             <Font size="14.0" />
          </font>
@@ -95,13 +95,12 @@
             <Font size="14.0" />
          </font>
       </Button>
-      <TableView fx:id="tv_clientes" layoutX="-2.0" layoutY="297.0" prefHeight="474.0" prefWidth="1023.0">
+      <TableView fx:id="tv_clientes" layoutX="-2.0" layoutY="297.0" onMouseClicked="#fillFields" prefHeight="474.0" prefWidth="1023.0">
         <columns>
           <TableColumn fx:id="tc_id" prefWidth="75.0" text="ID" />
           <TableColumn fx:id="tc_nome" prefWidth="75.0" text="Nome" />
             <TableColumn fx:id="tc_sexo" prefWidth="75.0" text="Sexo" />
             <TableColumn fx:id="tc_idade" prefWidth="75.0" text="Idade" />
-            <TableColumn fx:id="tc_cpf" prefWidth="369.0" text="CPF" />
         </columns>
          <columnResizePolicy>
             <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
